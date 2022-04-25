@@ -24,24 +24,18 @@
         <div class="details clearfix">
           <div class="sui-navbar">
             <div class="navbar-inner filter">
-              <ul class="sui-nav">
-                <li class="active">
-                  <a href="#">综合</a>
+              <ul class="sui-nav" >
+                <li  :class="isComprehensive ? 'active':''"  @click="changeOrder('1')">
+                  <a href="#">综合
+                    <span v-if="isUp" v-show="isComprehensive">↑</span>
+                    <span v-else v-show="isComprehensive">↓</span>
+                  </a>
                 </li>
-                <li>
-                  <a href="#">销量</a>
-                </li>
-                <li>
-                  <a href="#">新品</a>
-                </li>
-                <li>
-                  <a href="#">评价</a>
-                </li>
-                <li>
-                  <a href="#">价格⬆</a>
-                </li>
-                <li>
-                  <a href="#">价格⬇</a>
+                <li :class="isPrice ? 'active':''"  @click="changeOrder('2')">
+                  <a href="#">销量
+                    <span v-if="isUp" v-show="isPrice">↑</span>
+                    <span v-else v-show="isPrice">↓</span>
+                  </a>
                 </li>
               </ul>
             </div>
@@ -72,35 +66,7 @@
               </li>
             </ul>
           </div>
-          <div class="fr page">
-            <div class="sui-pagination clearfix">
-              <ul>
-                <li class="prev disabled">
-                  <a href="#">«上一页</a>
-                </li>
-                <li class="active">
-                  <a href="#">1</a>
-                </li>
-                <li>
-                  <a href="#">2</a>
-                </li>
-                <li>
-                  <a href="#">3</a>
-                </li>
-                <li>
-                  <a href="#">4</a>
-                </li>
-                <li>
-                  <a href="#">5</a>
-                </li>
-                <li class="dotted"><span>...</span></li>
-                <li class="next">
-                  <a href="#">下一页»</a>
-                </li>
-              </ul>
-              <div><span>共10页&nbsp;</span></div>
-            </div>
-          </div>
+
         </div>
       </div>
     </div>
@@ -117,6 +83,18 @@
     },
     computed:{
       ...mapGetters('search', ['goodsList']),
+      isComprehensive(){
+        return this.searchParams.order.indexOf('1') !== -1
+      },
+      isPrice(){
+        return this.searchParams.order.indexOf('2') !== -1
+      },
+      isUp(){
+        return this.searchParams.order.indexOf('asc') !== -1
+      },
+      isDown(){
+        return this.searchParams.order.indexOf('desc') !== -1
+      }
     },
     data(){
       return {
@@ -127,7 +105,7 @@
           "category3Id": "",
           "categoryName": "",
           "keyword": "",
-          "order": "",
+          "order": "1:desc",
           "pageNo": 1,
           "pageSize": 3,
           "props": [],
@@ -202,7 +180,26 @@
       removeAttr(index){
         this.searchParams.props.splice(index,1);
         this.getData();
+      },
+      changeOrder(flag){
+        // if(this.isPrice){
+        //
+        // }
+        console.log(flag)
+        let currentFlag = this.searchParams.order.split(':')[0];
+        let currentOrder = this.searchParams.order.split(':')[1];
+        let res = '';
+        //如果flag相同，则只需要修改排序
+        if(flag == currentFlag){
+          res = `${currentFlag}:${currentOrder === 'desc'? 'asc':'desc'}`
+        }else {
+          res = `${flag}:desc`
+        }
+        console.log(this.searchParams.order);
+        this.searchParams.order = res;
+        this.getData();
       }
+
     },
   }
 </script>

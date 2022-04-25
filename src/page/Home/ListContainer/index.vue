@@ -93,7 +93,7 @@
 //引入swiper
 import { mapState } from 'vuex'
 export default {
-  name: 'ListContainer',
+  name: 'HomeListContainerCom',
   computed:{
     ...mapState('home',{bannerList:'bannerList'}),
   },

@@ -48,7 +48,7 @@
           </div>
           <div class="goods-list">
             <ul class="yui3-g">
-              <li class="yui3-u-1-5" v-for="(goods,index) in goodsList" :key="goods.id">
+              <li class="yui3-u-1-5" v-for="(goods) in goodsList" :key="goods.id">
                 <div class="list-wrap">
                   <div class="p-img">
                     <a href="item.html" target="_blank"><img :src="goods.defaultImg" /></a>
@@ -111,7 +111,7 @@
   import SearchSelector from './SearchSelector/SearchSelector'
   import { mapGetters } from 'vuex'
   export default {
-    name: 'Search',
+    name: 'SearchCom',
     components: {
       SearchSelector,
     },

@@ -1,6 +1,6 @@
 <template>
   <div class="floor">
-    <div class="py-container" v-for="(floor,index) in floorList" :key="floor.id">
+    <div class="py-container" v-for="(floor) in floorList" :key="floor.id">
       <div class="title clearfix">
         <h3 class="fl">{{ floor.name }}</h3>
         <div class="fr">
@@ -54,7 +54,7 @@
 <script>
 import { mapState } from 'vuex'
 export default {
-  name: 'Floor',
+  name: 'HomeFloorCom',
   computed:{
     ...mapState('home',{floorList:'floorList'})
   },

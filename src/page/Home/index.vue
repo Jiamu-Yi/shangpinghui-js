@@ -20,7 +20,7 @@ import Recommend from '@/page/Home/Recommend'
 import TypeNav from '@/components/TypeNav'
 
 export default {
-  name: 'Home',
+  name: 'HomeRecommendCom',
   components:{
     Brand,
     Floor,

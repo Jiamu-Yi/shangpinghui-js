@@ -58,7 +58,7 @@
 
 <script>
 export default {
-  name: "",
+  name: "HeaderCom",
   mounted(){
     this.$bus.$on('clearKeyword',()=>{
       this.keyword =  '';

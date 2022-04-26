@@ -1,6 +1,6 @@
 <template>
   <div>
-    <TypeNav />
+    <TypeNavCom />
     <div class="main">
       <div class="py-container">
 <!--        这里传入的参数应该是总路由，而不是searchParams，因为searchParams只负责拼接参数，发送参数，发送完参数之后就会初始化，所以不可以那他用作其他组件传入的参数-->
@@ -66,7 +66,13 @@
               </li>
             </ul>
           </div>
-
+          <PaginationCom
+            :pageNo="searchParams.pageNo"
+            :pageSize="searchParams.pageSize"
+            :total="total"
+            :continues="5"
+            @getPageNo="getPageNo"
+          />
         </div>
       </div>
     </div>
@@ -75,7 +81,7 @@
 
 <script>
   import SearchSelector from './SearchSelector/SearchSelector'
-  import { mapGetters } from 'vuex'
+  import { mapGetters, mapState } from 'vuex'
   export default {
     name: 'SearchCom',
     components: {
@@ -83,6 +89,7 @@
     },
     computed:{
       ...mapGetters('search', ['goodsList']),
+
       isComprehensive(){
         return this.searchParams.order.indexOf('1') !== -1
       },
@@ -94,7 +101,10 @@
       },
       isDown(){
         return this.searchParams.order.indexOf('desc') !== -1
-      }
+      },
+      ...mapState('search', {
+        total:state => state.searchList.total
+      })
     },
     data(){
       return {
@@ -136,15 +146,17 @@
       }
     },
     methods:{
+      //使用参数请求数据
       getData(){
         this.$store.dispatch('search/getSearchList', this.searchParams)
       },
+      //修改品牌类型
       tradeMark(data){
-        console.log("1")
         //小细节：路由不可以在跳转之前修改，因为修改之后，Vue会判断路由和当前路由是否相等，如果相等的话就不会跳转，不需要对路由进行修改，在跳转之后，自然会修改
         this.searchParams.trademark = `${data.tmId}:${data.tmName}`;
         this.getData();
       },
+      //修改属性
       attrInfo(attrId,attrName,value){
         let attr = `${attrId}:${value}:${attrName}`;
         if(this.searchParams.props.indexOf(attr) === -1){
@@ -152,6 +164,7 @@
         }
         this.getData();
       },
+      //移除类型属性
       removeCategoryName(){
         //修改路由信息
         this.searchParams.categoryName = undefined;
@@ -165,6 +178,7 @@
           this.$router.push({name:"search", params: this.$route.params });
         }
       },
+      //移除关键词
       removeKeyword(){
         this.searchParams.keyword = undefined;
         this.$store.dispatch('search/getSearchList', this.searchParams)
@@ -173,19 +187,21 @@
           this.$router.push({name:"search", query:this.$route.query });
         }
       },
+      //移除品牌
       removeTrademark(){
         this.searchParams.trademark = undefined;
         this.getData()
       },
+      //移除属性
       removeAttr(index){
         this.searchParams.props.splice(index,1);
         this.getData();
       },
+      //改变排序
       changeOrder(flag){
         // if(this.isPrice){
         //
         // }
-        console.log(flag)
         let currentFlag = this.searchParams.order.split(':')[0];
         let currentOrder = this.searchParams.order.split(':')[1];
         let res = '';
@@ -195,11 +211,15 @@
         }else {
           res = `${flag}:desc`
         }
-        console.log(this.searchParams.order);
         this.searchParams.order = res;
         this.getData();
+      },
+      //获取当前第几页
+      getPageNo(pageNo){
+        console.log(pageNo);
+        this.searchParams.pageNo = pageNo;
+        this.getData();
       }
-
     },
   }
 </script>

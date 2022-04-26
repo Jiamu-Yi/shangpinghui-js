@@ -2,7 +2,7 @@
   <div>
     <div class="swiper-container" ref="Swiper">
       <div class="swiper-wrapper">
-        <div class="swiper-slide" v-for="(carouse,index) in list" :key="carouse.id">
+        <div class="swiper-slide" v-for="(carouse) in list" :key="carouse.id">
           <img :src="carouse.imgUrl" >
         </div>
       </div>
@@ -19,7 +19,7 @@
 <script>
 import Swiper from 'swiper'
 export default {
-  name: 'Carousel',
+  name: 'CarouselCom',
   props:['list'],
   watch:{
     list:{
@@ -27,7 +27,7 @@ export default {
       immediate:true,
       handler(){
         this.$nextTick(()=>{
-          const mySwiper = new Swiper (this.$refs.Swiper, {
+            new Swiper (this.$refs.Swiper, {
             loop: true, // 循环模式选项
             // 如果需要分页器
             pagination: {

@@ -3,11 +3,13 @@ import App from './App.vue';
 // 引入路由
 import router from '@/router'
 // 引入全局组件
-import TypeNav from '@/components/TypeNav';
-import Carousel from '@/components/Carousel';
+import TypeNavCom from '@/components/TypeNav';
+import CarouselCom from '@/components/Carousel';
+import PaginationCom from '@/components/Pagination';
 import '@/mock/serve';
-Vue.component(TypeNav.name,TypeNav);
-Vue.component(Carousel.name,Carousel);
+Vue.component(TypeNavCom.name,TypeNavCom);
+Vue.component(CarouselCom.name,CarouselCom);
+Vue.component(PaginationCom.name,PaginationCom);
 Vue.config.productionTip = false;
 
 //Vuex使用

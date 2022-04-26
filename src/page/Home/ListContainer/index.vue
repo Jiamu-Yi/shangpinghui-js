@@ -4,7 +4,7 @@
     <div class="sortList clearfix">
       <div class="center">
         <!--banner轮播-->
-        <Carousel :list="this.bannerList"/>
+        <CarouselCom :list="this.bannerList"/>
       </div>
       <div class="right">
         <div class="news">

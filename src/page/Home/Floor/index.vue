@@ -21,7 +21,7 @@
               <img :src="floor.imgUrl" />
             </div>
             <div class="floorBanner">
-              <Carousel :list="floor.carouselList"/>
+              <CarouselCom :list="floor.carouselList"/>
             </div>
             <div class="split">
               <span class="floor-x-line"></span>

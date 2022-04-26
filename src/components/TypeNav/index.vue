@@ -47,7 +47,7 @@
 import throttle from 'lodash/throttle'
 import {mapState} from 'vuex'
 export default {
-  name: "TypeNav",
+  name: "TypeNavCom",
 //  当组件挂载完毕时，就可以想服务器提交数据请求
   data(){
     return{
